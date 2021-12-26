@@ -1,4 +1,13 @@
+# ME
 # Use powerline
+#
+#  _________  _   _ 
+# |__  / ___|| | | |
+#   / /\___ \| |_| |
+#  / /_ ___) |  _  |
+# /____|____/|_| |_| 
+#
+#
 USE_POWERLINE="true"
 # Source manjaro-zsh-configuration
 if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
@@ -38,8 +47,14 @@ exf ()
   fi
 }
 
+# App alias
+alias ani-cli='cd && ./App/ani-cli'
+alias clock="tty-clock -tcC 7"
+
 # Simple command
 alias c='clear'
+alias q="exit"
+alias q!='exit'
 
 # info
 alias hw="hwinfo --short"
@@ -73,6 +88,8 @@ alias fprivate="firefox --private-window"
  alias njs='node'
  alias py='python'
  alias nv='nvim'
+ alias v='nvim'
+ alias vi='nvim'
 
 # editing dotfiles
 alias .zshrc='nvim ~/.zshrc'
@@ -86,6 +103,8 @@ alias unencrypt='gpg'
 # Make nvim the default editor
 export EDITOR='nvim'
 export VISUAL='nvim'
+
+
 
 # run command at startup
 neofetch

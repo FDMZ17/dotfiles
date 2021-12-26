@@ -1,9 +1,18 @@
+"  _   _         __     ___           
+" | \ | | ___  __\ \   / (_)_ __ ___  
+" |  \| |/ _ \/ _ \ \ / /| | '_ ` _ \ 
+" | |\  |  __/ (_) \ V / | | | | | | |
+" |_| \_|\___|\___/ \_/  |_|_| |_| |_|
+"
+
+
 :set number
 :set autoindent
 :set tabstop=4
 :set shiftwidth=4
 :set smarttab
 :set softtabstop=4
+:syntax on
 
 call plug#begin()
 
