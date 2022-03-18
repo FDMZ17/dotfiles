@@ -1,0 +1,10 @@
+Foreground   | #e3e3e3
+Background   | #1d212a
+Color 1      | #1d212a
+Color 2      | #fc8993
+Color 3      | #89e19c
+Color 4      | #fbdf90
+Color 5      | #a7bdfb
+Color 6      | #d990cd
+Color 7      | #81d4ee
+Color 8      | #e3e3e3
