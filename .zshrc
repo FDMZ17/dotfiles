@@ -1,110 +1,66 @@
-# ME
-# Use powerline
+# FDMZ17
 #
-#  _________  _   _ 
+#  _________  _   _
 # |__  / ___|| | | |
 #   / /\___ \| |_| |
 #  / /_ ___) |  _  |
-# /____|____/|_| |_| 
+# /____|____/|_| |_|
 #
 #
-USE_POWERLINE="true"
-# Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  source /usr/share/zsh/manjaro-zsh-config
-fi
-# Use manjaro zsh prompt
-if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-  source /usr/share/zsh/manjaro-zsh-prompt
+
+
+if [[ -e /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 fi
 
-# Compress a file
-alias tarcf='tar -cf '
+# Import shortcut config
+[ -f "$HOME/.zsh/.aliasrc" ] && source "$HOME/.zsh/.aliasrc"
 
-# Extract file
-exf ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *.deb)       ar x $1      ;;
-      *.tar.xz)    tar xf $1    ;;
-      *.tar.zst)   tar xf $1    ;;
-      *)           echo "'$1' cannot be extracted via exf()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# prefered editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='nvim'
+ else
+   export EDITOR='nvim'
+ fi
+ 
+
+# history size
+HISTSIZE=1000
+HISTFILESIZE=1500
+HISTFILE="$HOME/.zsh_history"
+
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# Enable searching through history
+bindkey '^R' history-incremental-pattern-search-backward
+
+# Edit line in vim buffer ctrl-v
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^v' edit-command-line
+# Enter vim buffer from normal mode
+autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd "^v" edit-command-line
+
+# Fix backspace bug when switching modes
+bindkey "^?" backward-delete-char
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
   fi
 }
-
-# App alias
-alias ani-cli='cd && ./App/ani-cli'
-alias clock="tty-clock -tcC 7"
-
-# Simple command
-alias c='clear'
-alias q="exit"
-alias q!='exit'
-
-# info
-alias hw="hwinfo --short"
-alias cpu='lscpu'
-alias ram='free'
-alias im='whoami'
-
-# list
-alias ls='ls --color=auto'
-alias la='ls -a'
-alias ll='ls -la'
-alias l='ls'
-alias l.="ls -A | egrep '^\.'"
-
-## Colorize the grep command output for ease of use (good for log files)##
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-
-# readable output
-alias df='df -h'
-
-#continue download
-alias wget="wget -c"
-
-#firefox private
-alias fprivate="firefox --private-window"
-
-# Coding alias
- alias vsc='code'
- alias njs='node'
- alias py='python'
- alias nv='nvim'
- alias v='nvim'
- alias vi='nvim'
-
-# editing dotfiles
-alias .zshrc='nvim ~/.zshrc'
-alias .neofetch='nvim ~/.config/neofetch/config.conf'
-alias .nvim='nvim ~/.config/nvim/init.vim'
-
-# Encrypt alias
-alias encrypt='gpg -c --no-symkey-cache --cipher-algo AES256'
-alias unencrypt='gpg'
-
-# Make nvim the default editor
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-
+zle -N zle-keymap-select
 
 # run command at startup
 neofetch
