@@ -4,10 +4,10 @@
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 35;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -25,7 +25,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "  terminal", "  media", " browser", "  other" };
+static const char *tags[] = { " home", "  terminal", "  media", " browser", "  other" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -64,12 +64,23 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *powermenu[] = { "/home/mokuken/scripts/powermenu.sh", NULL };
+static const char *powermenu[] = { "/home/fdmz17dev/.config/fdwm/script/powermenu.sh", NULL };
+static const char *upmenu[] = { "/home/fdmz17dev/.config/fdwm/script/upmenu.sh", NULL };
+static const char *clipmenu[] = { "/home/fdmz17dev/.config/fdwm/script/clipmenu.sh", NULL };
+static const char *clip[] = { "/home/fdmz17dev/.config/fdwm/script/clip.sh", NULL };
+static const char *settings[] = { "/home/fdmz17dev/.config/fdwm/script/settings.sh", NULL };
+static const char *ss[] = { "/home/fdmz17dev/.config/fdwm/script/ss.sh", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-        { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = powermenu } },
+    { MODKEY|ShiftMask|ControlMask, XK_s,      spawn,          {.v = powermenu } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,						XK_s,	   spawn,	       {.v = settings } },
+	{ MODKEY,						XK_r,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,						XK_c,	   spawn,          {.v = clip } },
+	{ MODKEY,						XK_v,	   spawn,		   {.v = clipmenu } },
+	{ MODKEY,						XK_u, 	   spawn,		   {.v = upmenu } },
+	{ MODKEY|ControlMask,			XK_p,      spawn,          {.v = ss } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -125,6 +136,7 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
